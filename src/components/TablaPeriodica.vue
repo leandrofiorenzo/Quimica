@@ -1,14 +1,14 @@
 <template>
     <div class='periodic'>
-
-      <periodo1 @onElementoSeleccionado='onElementoSeleccionado'/>
-      <periodo2 />
-      <periodo3 />
-      <periodo5 />
-      <periodo6 />
-      <periodo7 />
-      <periodo6A class="mt-3"/>
-      <periodo7A />
+      <periodo1 @onElementoSeleccionado="onElementoSeleccionado"/>
+      <periodo2 @onElementoSeleccionado="onElementoSeleccionado"/>
+      <periodo3 @onElementoSeleccionado="onElementoSeleccionado"/>
+      <periodo4 @onElementoSeleccionado="onElementoSeleccionado"/>
+      <periodo5 @onElementoSeleccionado="onElementoSeleccionado"/>
+      <periodo6 @onElementoSeleccionado="onElementoSeleccionado"/>
+      <periodo7 @onElementoSeleccionado="onElementoSeleccionado"/>
+      <periodo6A @onElementoSeleccionado="onElementoSeleccionado" class="mt-3"/>
+      <periodo7A @onElementoSeleccionado="onElementoSeleccionado"/>
     </div>
 </template>
 
@@ -38,15 +38,17 @@ export default {
     'periodo6A': Periodo6A,
     'periodo7A': Periodo7A,
   },
+  props: {
+    composicionCentesimal: {
+        type: Array
+    }
+  },
   methods: {
     onElementoSeleccionado (elemento) {
-      if(elemento) {
-        this.$modal.show(
-          ModalElemento, 
-          { elemento: elemento },
-          { height: 'auto'}
-        );
-      }
+      this.composicionCentesimal.push({
+        cantidadHallada: 0,
+        elemento: elemento
+      });               
     } 
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container-fluid pt-2">
-    <tabla-periodica/>
-    <formula-minima class="w-100"/>
+    <tabla-periodica :composicionCentesimal="composicionCentesimal"/>
+    <formula-minima :composicionCentesimal="composicionCentesimal" class="w-100"/>
   </div>
 </template>
 
@@ -15,7 +15,12 @@ export default {
   components: {
     'tabla-periodica': TablaPeriodica,
     'formula-minima': FormulaMinima
-  }
+  },
+  data () {
+    return {
+      composicionCentesimal: []
+    }
+  },
 };
 </script>
 
@@ -25,7 +30,7 @@ export default {
   min-height: 100vh;
   background-image:    url('./assets/fondo-quimica2.jpg');
   background-repeat:   no-repeat;
-  background-position: center center;     
+  background-position: center center;    
  }
 
 .transition(@args) {
@@ -59,7 +64,7 @@ body {
 }
 
 .periodic-row {
-	height: 12%;
+	height: 10%;
 }
 
 .cell {
@@ -252,7 +257,7 @@ body {
 // large screen
 @media (min-width: 1200px) {
   .periodic {
-    height: 700px;
+    height: 760px;
   }
   
   .at_num,

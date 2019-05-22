@@ -1,6 +1,6 @@
 <template>
   <div class="periodic-row"> 
-    <div v-for="i in 18" :key="i" class="cell">
+    <div v-for="i in 18" :key="i" class="cell" @click="$emit('onElementoSeleccionado', elemento(i))">
       <div v-if="elemento(i)" class="element">
         <div class="at_num">{{elemento(i).number}}</div>
         <div class="symbol">{{elemento(i).symbol}}</div>
