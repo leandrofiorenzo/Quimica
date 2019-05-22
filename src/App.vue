@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="container-fluid pt-2">
     <tabla-periodica/>
-    <formula-minima/>
+    <formula-minima class="w-100"/>
   </div>
 </template>
 
@@ -21,7 +21,13 @@ export default {
 
 <style lang="less">
 
-// Mixins
+ #app {
+  min-height: 100vh;
+  background-image:    url('./assets/fondo-quimica2.jpg');
+  background-repeat:   no-repeat;
+  background-position: center center;     
+ }
+
 .transition(@args) {
   -webkit-transition: @args;
           transition: @args;
@@ -53,8 +59,7 @@ body {
 }
 
 .periodic-row {
-  clear: both;
-	  height: 10%;
+	height: 12%;
 }
 
 .cell {
@@ -80,14 +85,6 @@ body {
   
   background-color: rgba(0, 128, 128, 0.6);
 }
-
-// .cell:hover .element {
-//   border-color: rgba(0,0,0,0.1);
-//   .transform(scale(3,3));
-//   z-index: 1;
-  
-//   background-color: rgba(0, 128, 128, 0.9);
-// }
 
 .at_num,
 .at_details {
@@ -255,7 +252,7 @@ body {
 // large screen
 @media (min-width: 1200px) {
   .periodic {
-    height: 800px;
+    height: 700px;
   }
   
   .at_num,

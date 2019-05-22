@@ -7,14 +7,8 @@
       <periodo5 />
       <periodo6 />
       <periodo7 />
-
-      <div class="periodic-row"></div>
-
-      <periodo6A />
+      <periodo6A class="mt-3"/>
       <periodo7A />
-    
-      <div style="clear: both;"></div> 
-
     </div>
 </template>
 
