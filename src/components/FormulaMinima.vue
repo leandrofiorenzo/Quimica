@@ -1,32 +1,17 @@
 <template>
-    <div class="p-2 bg-formula-minima" style="border-radius: 10px">
-        <div class="row">
-            <div class="col-3">
-                <h4>Composición Centesimal</h4>
-                <div v-for="elementoComposicionCentesimal in composicionCentesimal" :key="elementoComposicionCentesimal.elemento.number">
-                    {{elementoComposicionCentesimal.elemento.name}} ({{elementoComposicionCentesimal.cantidadHallada}}%)
-                    <input v-model="elementoComposicionCentesimal.cantidadHallada" type="number" class="form-control form-control-sm"/>
-                    <button class="btn btn-danger btn-sm" @click="sacarElementoDeComposicionCentesimal(elementoComposicionCentesimal)">
-                        Eliminar
-                    </button>
-                </div>
-            </div>
-            <div class="col-3">
-                <h4>Formula Mínima</h4>
+
+    <div class="row"> 
+        <div class="col-12">
+            <h4>Formula Mínima</h4>
+        </div>          
+        <div class="col-12">
+            <div v-if="formulaMinima != null">
                 <div v-for="elementoFormula in formulaMinima" :key="elementoFormula.elemento.number" class="d-inline font-weight-bold" style="font-size: 30px">         
                     {{elementoFormula.elemento.symbol}}<sub>{{elementoFormula.elementoAtomicidadFormulaMinima}}</sub>
                 </div>
             </div>
-            <div class="col-3">
-                <h4>Formula Molecular</h4>
-                Masa molar(g):
-                <input v-model="masaTotalSistema" type="number" class="form-control form-control-sm"/>
-
-                <div v-for="elementoFormula in formulaMolecular" :key="elementoFormula.elemento.number" class="d-inline font-weight-bold" style="font-size: 30px">         
-                    {{elementoFormula.elemento.symbol}}<sub>{{elementoFormula.elementoAtomicidadFormulaMolecular}}</sub>
-                </div>
-            </div>
-        </div> 
+            <span v-else>{{formulaMinimaError}}</span>          
+        </div>
     </div>
 </template>
 
@@ -41,33 +26,30 @@ export default {
             type: Array
         }
     },
-    data () {
-        return {
-            masaTotalSistema: 166, //Gramos...
-        }
-    },
-    methods: {
-        sacarElementoDeComposicionCentesimal(elementoComposicionCentesimal) {
-            let index = this.composicionCentesimal.indexOf(elementoComposicionCentesimal)
-            this.composicionCentesimal.splice(index, 1)
-        }
-    },
     computed: {
-        formulaMinima () {
-            return quimicaFunctions.calcularFormulaMinima(this.composicionCentesimal)
+        porcentajeTotal() {
+            if(this.composicionCentesimal.length > 0) {
+                let porcentajeTotal = 0;
+                this.composicionCentesimal.forEach(e => {
+                    porcentajeTotal += parseFloat(e.cantidadHallada)
+                });
+                return porcentajeTotal
+            }
+            return 0;
         },
-        formulaMolecular () {
-            return quimicaFunctions.calcularFormulaMolecularAPartirDeFormulaMinima(this.formulaMinima, this.masaTotalSistema)
+        formulaMinimaError () {
+            if(this.composicionCentesimal.length < 2)
+                return 'Debe seleccionar al menos 2 elementos.'
+            if(this.porcentajeTotal > 100) 
+                return 'El porcentaje total no puede ser mayor al 100%.'
+            if(this.porcentajeTotal < 100) 
+                return 'El porcentaje total debe ser 100%.'
+        },
+        formulaMinima () {
+            if(this.mostrarFormulaMinima)
+                return quimicaFunctions.calcularFormulaMinima(this.composicionCentesimal)
+            return null
         }
     }
 }
 </script>
-
-<style>
-.bg-formula-minima {
-    background-color: #1fc8db;
-    background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
-    color: white;
-    opacity: 0.95;
-}
-</style>

@@ -6,7 +6,7 @@
         <div class="symbol">{{elemento(i).symbol}}</div>
         <div class="at_details">
           {{elemento(i).name}}
-          <br>{{elemento(i).atomic_mass}}
+          <br>{{elemento(i).atomic_mass.toFixed(2)}}
         </div>
       </div>
     </div>

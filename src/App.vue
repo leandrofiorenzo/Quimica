@@ -1,36 +1,58 @@
 <template>
-  <div id="app" class="container-fluid pt-2">
+  <div id="app" class="container-fluid pt-2 text-center">
+   
     <tabla-periodica :composicionCentesimal="composicionCentesimal"/>
-    <formula-minima :composicionCentesimal="composicionCentesimal" class="w-100"/>
+    
+    <div class="row bg-formula-minima">
+      <composicion-centesimal class="col-4" :composicionCentesimal="composicionCentesimal"/>
+      <formula-minima class="col-4" :composicionCentesimal="composicionCentesimal"/>
+      <formula-molecular class="col-4" :composicionCentesimal="composicionCentesimal"/> 
+    </div>
+    
   </div>
 </template>
 
 <script>
 
-import TablaPeriodica from "@/components/TablaPeriodica"
-import FormulaMinima from "@/components/FormulaMinima"
- 
+import TablaPeriodica from        "@/components/TablaPeriodica"
+import ComposicionCentesimal from "@/components/ComposicionCentesimal"
+import FormulaMinima from         "@/components/FormulaMinima"
+import FormulaMolecular from      "@/components/FormulaMolecular"
+
 export default {
   name: "app",
   components: {
     'tabla-periodica': TablaPeriodica,
-    'formula-minima': FormulaMinima
+    'composicion-centesimal': ComposicionCentesimal,
+    'formula-minima': FormulaMinima,
+    'formula-molecular': FormulaMolecular,
   },
   data () {
     return {
       composicionCentesimal: []
     }
-  },
+  }
 };
 </script>
 
 <style lang="less">
 
+  .bg-formula-minima {
+      background-color: #1fc8db;
+      background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+      color: white;
+      opacity: 0.95;
+  }
+
  #app {
   min-height: 100vh;
-  background-image:    url('./assets/fondo-quimica2.jpg');
+  background-image:    url('./assets/bg-quimica.jpeg');
   background-repeat:   no-repeat;
   background-position: center center;    
+ }
+
+ .composicion-porcentaje {
+   width: 90px;
  }
 
 .transition(@args) {
@@ -64,14 +86,16 @@ body {
 }
 
 .periodic-row {
-	height: 10%;
+  height: 65px;
 }
 
 .cell {
   float: left;
   position: relative;
-  width: 5.55%;
+  //width: 5.55%;
   height: 100%;
+  width: 85px;
+  //height: 65px;
 }
 
 .element {
@@ -117,7 +141,7 @@ body {
 }
 
 .at_details {
-  bottom: 4px;
+  bottom: 0px;
   left: 0px;
   right: 0px;
 }
@@ -257,16 +281,18 @@ body {
 // large screen
 @media (min-width: 1200px) {
   .periodic {
-    height: 760px;
+    height: 610px;
+    width: 1550px;
+    margin: 0 auto;
   }
   
   .at_num,
   .at_details {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .symbol {
-    font-size: 30px;
+    font-size: 24px;
   }
 }
 </style>

@@ -23,7 +23,6 @@ import Periodo6 from '@/components/Periodo6'
 import Periodo7 from '@/components/Periodo7'
 import Periodo6A from '@/components/Periodo6A'
 import Periodo7A from '@/components/Periodo7A'
-import ModalElemento from '@/components/modals/ModalElemento'
 
 export default {
   name: 'TablaPeriodica',
@@ -45,10 +44,17 @@ export default {
   },
   methods: {
     onElementoSeleccionado (elemento) {
-      this.composicionCentesimal.push({
-        cantidadHallada: 0,
-        elemento: elemento
-      });               
+      if(elemento == null) return
+
+      let index = this.composicionCentesimal.findIndex(e => e.elemento.number == elemento.number)
+      if(index != -1) {
+        alert("Ya ingreso ese elemento.");
+      } else {
+        this.composicionCentesimal.push({
+          cantidadHallada: 0,
+          elemento: elemento
+        }); 
+      }           
     } 
   }
 }
