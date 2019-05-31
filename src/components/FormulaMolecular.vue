@@ -3,39 +3,40 @@
         <div class="col-12">
             <h4>Formula Molecular</h4>
         </div>          
-        <div class="col-12">
-            Masa molar(g):
-            <input v-model="masaTotalSistema" type="number" class="form-control form-control-sm"/>
-            <div v-for="elementoFormula in formulaMolecular" :key="elementoFormula.elemento.number" class="d-inline font-weight-bold" style="font-size: 30px">         
-                {{elementoFormula.elemento.symbol}}<sub>{{elementoFormula.elementoAtomicidadFormulaMolecular}}</sub>
+        <div class="col-12">  
+            <div v-if="formulaMolecularObj.errorMsg != null" class="text-danger font-weight-bold">
+                {{formulaMolecularObj.errorMsg}}
             </div>
+            <div v-else>
+            <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Masa (gramos)</span>
+                    </div>
+                    <input type="number" 
+                        class="form-control" 
+                        min="0" 
+                        v-model="masa" />
+                </div>             
+                <div v-for="elementoFormula in formulaMolecularObj.formulaMolecular" :key="elementoFormula.elemento.number" class="d-inline font-weight-bold" style="font-size: 30px">         
+                    {{elementoFormula.elemento.symbol}}<sub>{{elementoFormula.elementoAtomicidadFormulaMolecular}}</sub>
+                </div>
+            </div>
+ 
         </div>
     </div>
 </template>
 
 <script>
-
-import quimicaFunctions from "@/quimica";
-
 export default {
     name: "FormulaMolecular",
-    props: {
-        composicionCentesimal: {
-            type: Array
-        }
-    },
     data () {
         return {
-            //Masa en gramos
-            masaTotalSistema: 166, 
+            masa: 166, 
         }
     },
     computed: {
-        formulaMinima () {
-            return quimicaFunctions.calcularFormulaMinima(this.composicionCentesimal)
-        },
-        formulaMolecular () {
-            return quimicaFunctions.calcularFormulaMolecularAPartirDeFormulaMinima(this.formulaMinima, this.masaTotalSistema)
+        formulaMolecularObj () {
+            return this.$store.getters.getFormulaMolecular(this.masa)
         }
     }
 }

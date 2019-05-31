@@ -2,12 +2,16 @@
   <div id="app" class="container-fluid pt-2 text-center">
    
     <tabla-periodica :composicionCentesimal="composicionCentesimal"/>
-    
-    <div class="row bg-formula-minima">
-      <composicion-centesimal class="col-4" :composicionCentesimal="composicionCentesimal"/>
-      <formula-minima class="col-4" :composicionCentesimal="composicionCentesimal"/>
-      <formula-molecular class="col-4" :composicionCentesimal="composicionCentesimal"/> 
+
+    <div class="wrapper">
+      <div class="row bg-formula-minima">
+        <composicion-centesimal class="col-6" :composicionCentesimal="composicionCentesimal"/>
+        <formula-minima class="col-3" :composicionCentesimal="composicionCentesimal"/>
+        <formula-molecular class="col-3" :composicionCentesimal="composicionCentesimal"/> 
+      </div>
     </div>
+
+    <vue-snotify></vue-snotify>
     
   </div>
 </template>
@@ -31,11 +35,22 @@ export default {
     return {
       composicionCentesimal: []
     }
+  },
+  computed: {
+    getElementos () {
+      return this.$store.getters.getElementos
+    }
   }
 };
 </script>
 
 <style lang="less">
+
+  @import "~vue-snotify/styles/material.css";
+
+  .wrapper {
+    width: 1500px;
+  }
 
   .bg-formula-minima {
       background-color: #1fc8db;
@@ -46,6 +61,7 @@ export default {
 
  #app {
   min-height: 100vh;
+  overflow-x: hidden;
   background-image:    url('./assets/bg-quimica.jpeg');
   background-repeat:   no-repeat;
   background-position: center center;    

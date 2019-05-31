@@ -1,7 +1,7 @@
 <template>
     <div class="row"> 
         <div class="col-12">
-            <h4>Composición centesimal ({{porcentajeTotal.toFixed(2)}}%)</h4>  
+            <h4>Composición centesimal ({{composicionCentesimalPorcentajeTotal.toFixed(2)}}%)</h4>  
         </div>          
         <div class="col-6 mb-2" v-for="elementoComposicionCentesimal in composicionCentesimal" :key="elementoComposicionCentesimal.elemento.number">   
             <div class="input-group">
@@ -14,7 +14,7 @@
                     max="100" 
                     v-model="elementoComposicionCentesimal.cantidadHallada"/>
                 <div class="input-group-append">
-                   <span class="input-group-text" @click="sacarElementoDeComposicionCentesimal(elementoComposicionCentesimal)">
+                   <span class="input-group-text" @click="quitarElemento(elementoComposicionCentesimal)">
                         Quitar
                     </span> 
                 </div>
@@ -29,15 +29,9 @@ import quimicaFunctions from "@/quimica";
 
 export default {
     name: "ComposicionCentesimal",
-    props: {
-        composicionCentesimal: {
-            type: Array
-        }
-    },
     methods: {
-        sacarElementoDeComposicionCentesimal(elementoComposicionCentesimal) {
-            let index = this.composicionCentesimal.indexOf(elementoComposicionCentesimal)
-            this.composicionCentesimal.splice(index, 1)
+        quitarElemento(elementoComposicionCentesimal) {
+            this.$store.dispatch('quitarElemento', elementoComposicionCentesimal.elemento);
         }
     },
     watch: {
@@ -46,15 +40,11 @@ export default {
         }
     },
     computed: {
-        porcentajeTotal() {
-            if(this.composicionCentesimal.length > 0) {
-                let porcentajeTotal = 0;
-                this.composicionCentesimal.forEach(e => {
-                    porcentajeTotal += parseFloat(e.cantidadHallada)
-                });
-                return porcentajeTotal
-            }
-            return 0;
+        composicionCentesimal () {
+            return this.$store.getters.getComposicionCentesimal
+        },
+        composicionCentesimalPorcentajeTotal() {
+            return this.$store.getters.getPorcentajeComposicionCentesimal
         }
     }
 }

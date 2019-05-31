@@ -1,6 +1,6 @@
 <template>
   <div class="periodic-row">
-    <div v-for="i in 18" :key="i" class="cell" @click="$emit('onElementoSeleccionado', elemento(i))">
+    <div v-for="i in 18" :key="i" class="cell" @click="agregarElemento(elemento(i))">
       <div v-if="elemento(i)" class="element">
         <div class="at_num">{{elemento(i).number}}</div>
         <div class="symbol">{{elemento(i).symbol}}</div>
@@ -14,15 +14,26 @@
 </template>
 
 <script>
-
-import { obtenerElemento } from '@/elementos.js'
-
 export default {
   name: "Periodo7A",
+  data () {
+    return {
+      periodoNumero: 9
+    }
+  },
+  methods: {
+    async agregarElemento(elemento) {
+      try {
+        await this.$store.dispatch('agregarElemento', elemento);
+      } catch(err) {
+        this.$snotify.info(err);
+      }
+    }
+  },
   computed: {
     elemento () {
-      return (indice) => {
-        return obtenerElemento(9, indice)
+      return (grupoNumero) => {
+        return this.$store.getters.getElementoPorPeriodoYGrupo(this.periodoNumero, grupoNumero)
       }
     }
   }
