@@ -1,6 +1,6 @@
 <template>
   <div class="periodic-row">
-    <div v-for="i in 18" :key="i" class="cell" @click="agregarElemento(elemento(i))">
+    <div v-for="i in 18" :key="i" class="cell" @click="agregarElemento(elemento(i))" @mouseover="setElementoOnHover(elemento(i))" @mouseleave="setElementoOnHover(null)"s>
       <div v-if="elemento(i)" class="element">
         <div class="at_num">{{elemento(i).number}}</div>
         <div class="symbol">{{elemento(i).symbol}}</div>
@@ -28,6 +28,10 @@ export default {
       } catch(err) {
         this.$snotify.info(err);
       }
+    },
+    setElementoOnHover (elemento) {
+      if(elemento != null) this.$store.commit('setNumberElementoOnHover', elemento.number);
+      else this.$store.commit('setNumberElementoOnHover', null);     
     }
   },
   computed: {

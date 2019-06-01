@@ -21,7 +21,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     elementos: elementos,
-    composicionCentesimal: []
+    composicionCentesimal: [],
+    numberElementoOnHover: null,
   },
   mutations: {
     agregarElemento (state, elemento) {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
       let index = state.composicionCentesimal.indexOf(elementoComposicionCentesimal)
       if(index != -1)
         state.composicionCentesimal.splice(index, 1);
+    },
+    setNumberElementoOnHover (state, number) {
+      state.numberElementoOnHover = number;
     }
   },
   actions: {
@@ -106,10 +110,9 @@ export default new Vuex.Store({
     },
     getFormulaMolecular (state, getters) {
       return (masa) => {
-
         if(getters.getFormulaMinima.errorMsg == null) {
           return {
-            formulaMolecular: quimicaFunctions.calcularFormulaMolecularAPartirDeFormulaMinima(getters.getFormulaMinima.FormulaMinina, masa),
+            formulaMolecular: quimicaFunctions.calcularFormulaMolecularAPartirDeFormulaMinima(getters.getFormulaMinima.formulaMinima, masa),
             errorMsg: null
           }
         } else {
@@ -119,6 +122,9 @@ export default new Vuex.Store({
           }
         }
       }
+    },
+    getElementoOnHover (state, getters) {
+      return state.numberElementoOnHover != null ? getters.getElementoPorNumero(state.numberElementoOnHover) : null
     }
   }
 })

@@ -3,16 +3,17 @@
    
     <tabla-periodica :composicionCentesimal="composicionCentesimal"/>
 
-    <div class="wrapper">
-      <div class="row bg-formula-minima">
-        <composicion-centesimal class="col-6" :composicionCentesimal="composicionCentesimal"/>
-        <formula-minima class="col-3" :composicionCentesimal="composicionCentesimal"/>
-        <formula-molecular class="col-3" :composicionCentesimal="composicionCentesimal"/> 
-      </div>
+
+    <div class="row bg-formula-minima">
+      <composicion-centesimal class="col-6" :composicionCentesimal="composicionCentesimal"/>
+      <formula-minima class="col-3" :composicionCentesimal="composicionCentesimal"/>
+      <formula-molecular class="col-3" :composicionCentesimal="composicionCentesimal"/> 
     </div>
 
+    <tooltip-elemento class="center-pane" v-if="elementoOnHover != null" :elemento="elementoOnHover"/>
+
     <vue-snotify></vue-snotify>
-    
+
   </div>
 </template>
 
@@ -22,6 +23,7 @@ import TablaPeriodica from        "@/components/TablaPeriodica"
 import ComposicionCentesimal from "@/components/ComposicionCentesimal"
 import FormulaMinima from         "@/components/FormulaMinima"
 import FormulaMolecular from      "@/components/FormulaMolecular"
+import TooltipElemento from       "@/components/TooltipElemento"
 
 export default {
   name: "app",
@@ -30,6 +32,7 @@ export default {
     'composicion-centesimal': ComposicionCentesimal,
     'formula-minima': FormulaMinima,
     'formula-molecular': FormulaMolecular,
+    'tooltip-elemento': TooltipElemento
   },
   data () {
     return {
@@ -37,8 +40,8 @@ export default {
     }
   },
   computed: {
-    getElementos () {
-      return this.$store.getters.getElementos
+    elementoOnHover () {
+      return this.$store.getters.getElementoOnHover
     }
   }
 };
@@ -46,18 +49,14 @@ export default {
 
 <style lang="less">
 
-  @import "~vue-snotify/styles/material.css";
+@import "~vue-snotify/styles/material.css";
 
-  .wrapper {
-    width: 1500px;
-  }
-
-  .bg-formula-minima {
-      background-color: #1fc8db;
-      background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
-      color: white;
-      opacity: 0.95;
-  }
+.bg-formula-minima {
+    background-color: #1fc8db;
+    background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    color: white;
+    opacity: 0.95;
+}
 
  #app {
   min-height: 100vh;
@@ -311,4 +310,113 @@ body {
     font-size: 24px;
   }
 }
+
+
+.tooltip {
+  display: block !important;
+  z-index: 10000;
+}
+
+.tooltip .tooltip-inner {
+  background: black;
+  color: white;
+  border-radius: 16px;
+  padding: 5px 10px 4px;
+}
+
+.tooltip .tooltip-arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  margin: 5px;
+  border-color: black;
+  z-index: 1;
+}
+
+.tooltip[x-placement^="top"] {
+  margin-bottom: 5px;
+}
+
+.tooltip[x-placement^="top"] .tooltip-arrow {
+  border-width: 5px 5px 0 5px;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  bottom: -5px;
+  left: calc(50% - 5px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.tooltip[x-placement^="bottom"] {
+  margin-top: 5px;
+}
+
+.tooltip[x-placement^="bottom"] .tooltip-arrow {
+  border-width: 0 5px 5px 5px;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color: transparent !important;
+  top: -5px;
+  left: calc(50% - 5px);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.tooltip[x-placement^="right"] {
+  margin-left: 5px;
+}
+
+.tooltip[x-placement^="right"] .tooltip-arrow {
+  border-width: 5px 5px 5px 0;
+  border-left-color: transparent !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+  left: -5px;
+  top: calc(50% - 5px);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.tooltip[x-placement^="left"] {
+  margin-right: 5px;
+}
+
+.tooltip[x-placement^="left"] .tooltip-arrow {
+  border-width: 5px 0 5px 5px;
+  border-top-color: transparent !important;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  right: -5px;
+  top: calc(50% - 5px);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.tooltip.popover .popover-inner {
+  background: #f9f9f9;
+  color: black;
+  padding: 24px;
+  border-radius: 5px;
+  box-shadow: 0 5px 30px rgba(black, .1);
+}
+
+.tooltip.popover .popover-arrow {
+  border-color: #f9f9f9;
+}
+
+.tooltip[aria-hidden='true'] {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .15s, visibility .15s;
+}
+
+.tooltip[aria-hidden='false'] {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity .15s;
+}
+
+
 </style>

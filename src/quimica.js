@@ -26,8 +26,9 @@ let calcularFormulaMinima = (composicionCentesimal) => {
         formulaMinima[j].elementoAtomicidadFormulaMinima = Math.round(formulaMinima[j].elementoCantidadRelativa / valorMinimo)
     }
 
-    return formulaMinima.sort((elemento1, elemento2) => 
-        elemento1.elemento.electronegativity_pauling - elemento2.elemento.electronegativity_pauling);
+    return formulaMinima.sort((elemento1, elemento2) =>  
+        elemento1.elemento.electronegativity_pauling - elemento2.elemento.electronegativity_pauling)
+    
 }
 
 //Devuelve la formula molecular a partir de la formula mínima y la masa total del sistema

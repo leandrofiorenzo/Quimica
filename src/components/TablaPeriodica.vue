@@ -8,7 +8,7 @@
       <periodo6/>
       <periodo7/>
       <periodo6A class="mt-3"/>
-      <periodo7A/>
+      <periodo7A/>  
     </div>
 </template>
 
